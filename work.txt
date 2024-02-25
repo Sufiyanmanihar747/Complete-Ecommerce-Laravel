@@ -1,0 +1,21 @@
+all about postman
+laravel 10 sanctum
+api make
+make api for CRUD
+
+access token using sanctum--
+queue job---
+schedular--
+ecommerce website
+
+
+laravel
+html
+bootatrap
+jquery
+
+tables:-
+user
+product 
+review
+
