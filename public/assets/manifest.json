@@ -1,9 +1,4 @@
 {
-  "resources/css/app.css": {
-    "file": "js/app.js",
-    "src": "resources/css/app.css",
-    "isEntry": true
-  },
   "resources/css/custom-style.css": {
     "file": "css/custom-style.css",
     "src": "resources/css/custom-style.css",
@@ -17,6 +12,11 @@
   "resources/js/custom-script.js": {
     "file": "js/custom-script.js",
     "src": "resources/js/custom-script.js",
+    "isEntry": true
+  },
+  "resources/sass/app.scss": {
+    "file": "css/app.css",
+    "src": "resources/sass/app.scss",
     "isEntry": true
   }
 }

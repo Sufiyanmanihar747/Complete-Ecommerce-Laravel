@@ -1,11 +1,6 @@
-@extends('layouts.app')
-
-@section('section')
 <section class="service">
     <div class="container">
-
       <ul class="service-list">
-
         <li class="service-item">
           <div class="service-item-icon">
             <img src="{{ asset('logos/service-icon-1.svg') }}" alt="Service icon">
@@ -58,4 +53,3 @@
 
     </div>
   </section>
-@endsection

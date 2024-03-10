@@ -16,6 +16,13 @@ jquery
 
 tables:-
 user
-product 
+product
 review
 
+spatie
+
+
+what can admin do
+what can superadmin do
+admin can create 
+registration

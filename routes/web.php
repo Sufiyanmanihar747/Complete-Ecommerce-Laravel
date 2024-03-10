@@ -1,7 +1,8 @@
 <?php
 
-use App\Http\Controllers\HomeController;
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\SuperAdminController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -18,7 +19,16 @@ use Illuminate\Support\Facades\Route;
 
 
 Auth::routes();
-Route::middleware(['auth'])->group(function () {
-    Route::get('/home', [HomeController::class, 'index'])->name('home');
-    Route::resource('product', ProductController::class);
+Route::middleware('auth')->group(function () {
+    Route::resource('home', ProductController::class);
+});
+
+Route::middleware('admin')->group(function () {
+    Route::resource('admin', AdminController::class);
+    Route::get('dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
+});
+
+Route::middleware('superadmin')->group(function () {
+    Route::resource('superadmin', SuperAdminController::class);
+    Route::get('superdashboard', [SuperAdminController::class, 'superdashboard'])->name('superadmin.superdashboard');
 });
