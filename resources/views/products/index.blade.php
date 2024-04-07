@@ -2,7 +2,6 @@
 
 @section('content')
   <article>
-
     {{-- CARESOLE --}}
 
     @include('layouts.caresole')

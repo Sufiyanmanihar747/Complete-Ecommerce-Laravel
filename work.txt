@@ -22,7 +22,4 @@ review
 spatie
 
 
-what can admin do
-what can superadmin do
-admin can create 
-registration
+can we have to creat another folder for category in storage folder

@@ -83,7 +83,8 @@ class SuperAdminController extends Controller
         return view('superadmin.dashboard');
     }
 
-    public function users()
+    public function category()
     {
+        return view('superadmin.category');
     }
 }

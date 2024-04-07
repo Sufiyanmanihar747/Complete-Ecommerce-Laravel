@@ -18,7 +18,7 @@
           <td class="text-center"><a href="{{ route('admin.show', $product->id) }}">{{ $product->title }}</a></td>
           <td class="text-center">{{ $product->price }}</td>
           <td class="text-center">{{ $product->company }}</td>
-          <td class="text-center">{{ $product->category }}</td>
+          <td class="text-center">{{ $product->categories->name }}</td>
           <td class="text-center">{{ $product->description }}</td>
           <td class="text-center d-flex gap-2">
             <a href="{{ route('admin.edit', [$product->id]) }}" class="btn btn-outline-success p-1 px-2">Edit</a>

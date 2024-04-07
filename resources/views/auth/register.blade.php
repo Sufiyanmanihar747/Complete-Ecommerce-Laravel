@@ -63,15 +63,7 @@
                   </div>
                 </div>
               </div>
-
-              <div class="mb-4 w-100">
-                <label class="font-weight-bold m-0" for="gender">Role:</label>
-                {!! Form::select('role', ['superadmin' => 'Super Admin', 'admin' => 'Admin', 'user' => 'User'], null, [
-                    'class' => 'form-control h-75',
-                    'placeholder' => 'Select Role',
-                ]) !!}
-              </div>
-
+              
               <div class="">
                 <div class="">
                   <button type="submit" class="btn btn-primary">

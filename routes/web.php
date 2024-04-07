@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\SuperAdminController;
 use Illuminate\Support\Facades\Auth;
@@ -31,4 +32,5 @@ Route::middleware('admin')->group(function () {
 Route::middleware('superadmin')->group(function () {
     Route::resource('superadmin', SuperAdminController::class);
     Route::get('superdashboard', [SuperAdminController::class, 'superdashboard'])->name('superadmin.superdashboard');
+   Route::resource('category' ,CategoryController::class);
 });

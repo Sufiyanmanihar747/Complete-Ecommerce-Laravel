@@ -13,12 +13,18 @@ class Product extends Model
         'description',
         'price',
         'company',
-        'category',
         'images',
+        'category_id',
+        'user_id',
     ];
 
     public function admin()
     {
-        return $this->belongsTo(User::class, 'admin _id');
+        return $this->belongsTo(User::class, 'user_id');
+    }
+
+    public function categories()
+    {
+        return $this->belongsTo(Category::class, 'category_id');
     }
 }

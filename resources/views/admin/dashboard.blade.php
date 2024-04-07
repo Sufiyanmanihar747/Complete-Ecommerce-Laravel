@@ -14,10 +14,10 @@
         <div class="col-md-3 mb-4">
           <div class="box" id="box-2">
             <h4>Total Products</h4>
-            <p class="box-value" id="box-value-2">{{DB::table('products')->count();
+            <p class="box-value" id="box-value-2">{{Auth::user()->products->count();
             }}</p>
           </div>
-          
+
         </div>
         <div class="col-md-3 mb-4">
           <div class="box" id="box-3">

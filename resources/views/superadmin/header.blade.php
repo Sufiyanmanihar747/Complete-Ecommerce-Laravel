@@ -23,8 +23,8 @@
       </a>
     </li>
     <li>
-      <a href="#" class="nav-link text-white">
-        Customers
+      <a href="{{ route('category.index') }}" class="nav-link text-white">
+        Category
       </a>
     </li>
   </ul>

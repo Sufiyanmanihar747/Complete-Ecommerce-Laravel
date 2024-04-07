@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
 
 
@@ -14,8 +16,8 @@ class AdminController extends Controller
      */
     public function index()
     {
-        $products = Product::all();
-        // dump(Product::all());
+        $admin = Auth::user();;
+        $products = $admin->products;
         return view('admin.products', compact('products'));
     }
 
@@ -24,7 +26,8 @@ class AdminController extends Controller
      */
     public function create()
     {
-        return view('admin.create');
+        $categories = Category::pluck('name', 'id')->toArray();
+        return view('admin.create', compact('categories'));
     }
 
     /**
@@ -33,6 +36,7 @@ class AdminController extends Controller
     public function store(Request $request)
     {
         $data = $request->only(['title', 'price', 'company', 'category', 'description', 'images']);
+        $data['user_id'] = Auth::id();
         if ($request->hasFile('images')) {
             $imageArray = $request->file('images');
             $final = [];
@@ -63,9 +67,9 @@ class AdminController extends Controller
      */
     public function edit(string $id)
     {
-        // dd($id);
         $product = Product::find($id);
-        return view('admin.create', compact('product'));
+        $categories = Category::pluck('name', 'id')->toArray();
+        return view('admin.create', compact('product', 'categories'));
     }
 
     /**
@@ -73,10 +77,9 @@ class AdminController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        dump($request);
+        // dd($request);
         $product = Product::find($id);
-        $data = $request->only(['title', 'price', 'company', 'category', 'description', 'images']);
-        dump($data);
+        $data = $request->only(['title', 'price', 'company', 'category', 'description', 'images', 'category_id']);
         $currentImages = $product->images;
         if ($request->hasFile('images')) {
             $newImages = [];
@@ -87,7 +90,8 @@ class AdminController extends Controller
             }
             $imgString = implode(',', $newImages);
             $data['images'] = $imgString;
-            // dd($data);
+
+            // deleting old images
             $oldImages = explode(',', $product->images);
             foreach ($oldImages as $filename) {
                 $path = public_path('storage/images/' . $filename);

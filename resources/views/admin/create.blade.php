@@ -96,21 +96,25 @@
             {{ $message }}
           @enderror
         </span>
-        {!! Form::select(
-            'category',
-            [
-                '1st year' => '1st Year',
-                '2nd year' => '2nd Year',
-                '3rd year' => '3rd Year',
-                '4th year' => '4th Year',
-            ],
-            isset($product) ? $product->category : null,
-            [
-                'class' => 'form-control h-75',
-                'placeholder' => 'Select category',
-                'required' => 'required',
-            ],
-        ) !!}
+        {{-- {!! Form::select('category_id', $categories, isset($product) ? $product->category_id : null, [
+            'class' => 'form-control h-75',
+            'placeholder' => 'Select category',
+            'required' => 'required',
+        ]) !!} --}}
+        @if (isset($product))
+          {!! Form::select('category_id', $categories, $product->category_id, [
+              'class' => 'form-control h-75',
+              'placeholder' => 'Select category',
+              'required' => 'required',
+          ]) !!}
+        @else
+          {!! Form::select('category_id', $categories, null, [
+              'class' => 'form-control h-75',
+              'placeholder' => 'Select category',
+              'required' => 'required',
+          ]) !!}
+        @endif
+
       </div>
     </div>
 
