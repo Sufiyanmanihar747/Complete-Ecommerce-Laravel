@@ -82,14 +82,6 @@ class AdminController extends Controller
         $data = $request->only(['title', 'price', 'company', 'category', 'description', 'images', 'category_id']);
         $currentImages = $product->images;
         if ($request->hasFile('images')) {
-            $newImages = [];
-            foreach ($request->file('images') as $image) {
-                $originalName = $image->getClientOriginalName();
-                $image->storeAs('public/images', $originalName);
-                $newImages[] = $originalName;
-            }
-            $imgString = implode(',', $newImages);
-            $data['images'] = $imgString;
 
             // deleting old images
             $oldImages = explode(',', $product->images);
@@ -99,6 +91,16 @@ class AdminController extends Controller
                     File::delete($path);
                 }
             }
+
+            //storing new images
+            $newImages = [];
+            foreach ($request->file('images') as $image) {
+                $originalName = $image->getClientOriginalName();
+                $image->storeAs('public/images', $originalName);
+                $newImages[] = $originalName;
+            }
+            $imgString = implode(',', $newImages);
+            $data['images'] = $imgString;
         } else {
             $data['images'] = $currentImages;
         }

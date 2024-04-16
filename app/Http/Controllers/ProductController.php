@@ -24,6 +24,7 @@ class ProductController extends Controller
      */
     public function create()
     {
+
     }
 
     /**
@@ -41,7 +42,9 @@ class ProductController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $product = Product::find($id);
+        return view('products.show', compact('product'));
+
     }
 
     /**

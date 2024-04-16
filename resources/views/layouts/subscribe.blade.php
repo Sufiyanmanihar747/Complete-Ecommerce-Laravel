@@ -1,31 +1,30 @@
 <section class="section newsletter">
-    <div class="container">
+  <div class="container">
 
-      <div class="newsletter-card" style="background-image: url('{{ asset('images/newsletter-bg.png') }}')">
+    <div class="newsletter-card" style="background-image: url('{{ asset('images/newsletter-bg.png') }}')">
 
-        <h2 class="card-title">Subscribe Newsletter</h2>
+      <h2 class="card-title">Subscribe Newsletter</h2>
 
-        <p class="card-text">
-          Enter your email below to be the first to know about new collections and product launches.
-        </p>
+      <p class="card-text">
+        Enter your email below to be the first to know about new collections and product launches.
+      </p>
 
-        <form action="" class="card-form">
+      <form action="" class="card-form">
 
-          <div class="input-wrapper">
-            <ion-icon name="mail-outline"></ion-icon>
+        <div class="input-wrapper">
+          <ion-icon name="mail-outline"></ion-icon>
 
-            <input type="email" name="emal" placeholder="Enter your email" required class="input-field">
-          </div>
+          <input type="email" name="emal" placeholder="Enter your email" required class="input-field">
+        </div>
 
-          <button type="submit" class="btn btn-primary w-100">
-            <span>Subscribe</span>
+        <button type="submit" class="btn btn-primary d-flex">
+          <span>Subscribe</span>
+          <ion-icon name="arrow-forward" aria-hidden="true"></ion-icon>
+        </button>
 
-            <ion-icon name="arrow-forward" aria-hidden="true"></ion-icon>
-          </button>
-
-        </form>
-
-      </div>
+      </form>
 
     </div>
-  </section>
+
+  </div>
+</section>

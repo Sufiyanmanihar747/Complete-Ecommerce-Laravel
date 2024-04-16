@@ -49,14 +49,22 @@
       padding: var(--bs-navbar-padding-y) var(--bs-navbar-padding-x);
     }
 
+    ::-webkit-scrollbar {
+      width: 0;
+    }
+
     .navbar-icon {
       font-size: 30px;
-      color: #555;
+      color: black;
       margin: 0 10px;
     }
 
     .navbar-icon.active {
       color: #405de6;
+    }
+
+    .mobile-logo {
+      display: none;
     }
 
     @media (min-width: 992px) {
@@ -75,6 +83,26 @@
       .navbar {
         display: none;
       }
+
+      body {
+        padding: 0;
+      }
+
+      .main-padding {
+        padding: 40px 0px !important;
+      }
+
+      .mobile-logo {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        position: fixed;
+        width: 100vw;
+        z-index: 10000;
+        top: 0;
+        backdrop-filter: blur(10px);
+        background-color: #ffffff69;
+      }
     }
   </style>
 
@@ -83,7 +111,6 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      height: 100vh;
     }
 
     .card {
@@ -175,117 +202,138 @@
       color: rgb(14, 163, 14) !important;
     }
   </style>
+  <style>
+    .counter-btn {
+      width: 30px;
+      height: 30px;
+      font-size: 16px;
+      line-height: 30px;
+      text-align: center;
+    }
+
+    .notification-toast {
+      position: fixed;
+      bottom: 80px;
+      left: 20px;
+      right: 20px;
+      background: white;
+      max-width: 300px;
+      display: flex;
+      align-items: flex-start;
+      padding: 0px 15px;
+      box-shadow: 0 5px 20px hsla(0, 0%, 0%, 0.15);
+      transform: translateX(calc(-100% - 40px));
+      transition: 0.5s ease-in-out;
+      z-index: 2000;
+      animation: slideInOut 10s ease-in-out infinite;
+    }
+
+    @keyframes slideInOut {
+
+      0%,
+      45%,
+      100% {
+        transform: translateX(calc(-100% - 40px));
+        opacity: 0;
+        visibility: hidden;
+      }
+
+      50%,
+      95% {
+        transform: translateX(0);
+        opacity: 1;
+        visibility: visible;
+      }
+    }
+
+    .notification-toast.closed {
+      display: none;
+    }
+
+    .toast-close-btn {
+      font-size: 24px;
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      color: black;
+    }
+
+    .toast-banner {
+      width: 70px;
+      height: 70px;
+    }
+
+    .toast-detail {
+      padding-right: 10px;
+    }
+
+    .toast-message {
+      margin-bottom: 8px;
+    }
+
+    .cart-count {
+      position: absolute;
+      top: 10px;
+      right: 119px;
+      border-radius: 20px;
+      font-size: 15px;
+      background-color: #ffc800;
+      padding: 0px 4px;
+    }
+  </style>
 </head>
 
-<body>
+<body style="background: linear-gradient(to right, #aedbff, #c0ffc0);
+">
   <div id="app">
+    <nav class="navbar navbar-expand-lg p-0 px-4"
+      style="height: 70px;position: fixed; z-index: 1000;width: 100vw;backdrop-filter: blur(10px);background-color: #ffffff69;">
+      <a class="navbar-brand p-0" href="{{ route('home.index') }}"><img
+          src="{{ asset('logos/trendbazaar-high-resolution-logo-transparent.png') }}"
+          style="width: 144px;overflow: hidden;" alt="" class="mt-2"></a>
+      <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
+        <ul class="navbar-nav ml-auto gap-5">
+          <li class="nav-item active">
+            <a class="nav-link" href="#"> Home <span class="sr-only">(current)</span></a>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+              aria-haspopup="true" aria-expanded="false">Category</a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <a class="dropdown-item" href="#">General Inquiry</a>
+              <a class="dropdown-item" href="#">Sales</a>
+              <a class="dropdown-item" href="#">Support</a>
+            </div>
+          </li>
 
-    {{-- <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
-      <div class="container">
-        <a class="navbar-brand" href="{{ url('/') }}">
-          {{ config('app.name', 'TrendBazaar') }}
-        </a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
-          aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-          <!-- Left Side Of Navbar -->
-          <ul class="navbar-nav me-auto">
-
-          </ul>
-
-          <!-- Right Side Of Navbar -->
-          <ul class="navbar-nav ms-auto">
-            <!-- Authentication Links -->
-            @guest
-              @if (Route::has('login'))
-                <li class="nav-item">
-                  <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
-                </li>
-              @endif
-
-              @if (Route::has('register'))
-                <li class="nav-item">
-                  <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
-                </li>
-              @endif
-            @else
-              <li class="nav-item dropdown">
-                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"
-                  data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                  {{ Auth::user()->name }}
-                </a>
-
-                <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                  <a class="dropdown-item" href="{{ route('logout') }}"
-                    onclick="event.preventDefault();
-                      document.getElementById('logout-form').submit();">
-                    {{ __('Logout') }}
-                  </a>
-
-                  <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                    @csrf
-                  </form>
-                </div>
-              </li>
-            @endguest
-          </ul>
-        </div>
-      </div>
-    </nav> --}}
-
-    @if (Auth::user())
-      <nav class="navbar navbar-expand-lg p-0 px-4"
-        style="height: 70px;position: fixed; z-index: 1000;
-  width: 100vw;
-  backdrop-filter: blur(10px);
-  background-color: #ffffff69;">
-        <a class="navbar-brand p-0" href="#"><img
-            src="{{ asset('logos/trendbazaar-high-resolution-logo-transparent.png') }}"
-            style="width: 144px;overflow: hidden;" alt="" class="mt-2"></a>
-        <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
-          <ul class="navbar-nav ml-auto gap-5">
-            <li class="nav-item active">
-              <a class="nav-link" href="#"> Home <span class="sr-only">(current)</span></a>
-            </li>
-            <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown"
-                role="button"data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></i>Category</a>
-              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <a class="dropdown-item" href="#">General Inquiry</a>
-                <a class="dropdown-item" href="#">Sales</a>
-                <a class="dropdown-item" href="#">Support</a>
-              </div>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#"> About</a>
-            </li>
-            <li class="nav-item dropdown">
-              <a class="nav-link" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
-                aria-haspopup="true" aria-expanded="false"></i> Contact</a>
-              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <a class="dropdown-item" href="#">General Inquiry</a>
-                <a class="dropdown-item" href="#">Sales</a>
-                <a class="dropdown-item" href="#">Support</a>
-              </div>
-            </li>
-            {{-- <a class="nav-link" href="#"><i class="fas fa-user"></i></a> --}}
-          </ul>
-          <ul class="ml-auto navbar-nav">
+          <li class="nav-item">
+            <a class="nav-link" href="#"> About</a>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+              aria-haspopup="true" aria-expanded="false"></i> Contact</a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <a class="dropdown-item" href="#">General Inquiry</a>
+              <a class="dropdown-item" href="#">Sales</a>
+              <a class="dropdown-item" href="#">Support</a>
+            </div>
+          </li>
+        </ul>
+        <ul class="ml-auto navbar-nav">
+          @if (Auth::user())
             <li class="nav-item mr-4">
-              <a class="nav-link" href="#"><i class="fas fa-shopping-cart"></i> </a>
+              <a class="nav-link" href="{{ route('cart.index') }}"><i class="fas fa-shopping-cart"></i><span
+                  class="cart-count">{{ DB::table('cart_items')->where('user_id', Auth::id())->count() }}</span></a>
             </li>
             <li class="nav-item dropdown">
-              <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"
-                data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+              <a id="navbarDropdown" class="nav-link" href="#" role="button" data-bs-toggle="dropdown"
+                aria-haspopup="true" aria-expanded="false" v-pre>
                 {{ Auth::user()->name }}
               </a>
               <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
                 <a class="dropdown-item" href="{{ route('logout') }}"
                   onclick="event.preventDefault();
-                        document.getElementById('logout-form').submit();">
+                          document.getElementById('logout-form').submit();">
                   {{ __('Logout') }}
                 </a>
 
@@ -293,34 +341,161 @@
                   @csrf
                 </form>
               </div>
-              {{-- <span>{{ Auth::user()->name }}</span> --}}
-            </li>
-          </ul>
-        </div>
-      </nav>
-      <nav class="first-nav navbar-expand-lg navbar-light" style="z-index: 1000">
-        <a class="navbar-brand" href="#">
-          <i class="fas fa-store navbar-icon"></i> <!-- Replace with your store icon -->
-        </a>
-        <a class="navbar-icon" href="#"><i class="fas fa-shopping-cart"></i></a> <!-- Replace with cart icon -->
-        <a class="navbar-icon" href="#"><i class="far fa-heart"></i></a> <!-- Replace with wishlist icon -->
-        <a class="navbar-icon" href="#"><i class="fas fa-search"></i></a> <!-- Replace with search icon -->
-        <a class="navbar-icon" href="#"><i class="far fa-user"></i></a> <!-- Replace with user icon -->
-      </nav>
-    @endif
-    <main class="pt-5">
+            @else
+              <a class="nav-link " href="{{ route('login') }}">{{ __('Login') }}<i class="fas fa-sign-in-alt"></i></a>
+          @endif
+          </li>
+        </ul>
+      </div>
+    </nav>
+    <nav class="first-nav navbar-expand-lg navbar-light"
+      style="z-index: 1000;backdrop-filter: blur(10px);background-color: #ffffff69;">
+      <a class="navbar-brand" href="#">
+        <i class="fas fa-store navbar-icon"></i>
+      </a>
+      <a class="navbar-icon" href="#"><i class="fas fa-shopping-cart"></i></a>
+      <a class="navbar-icon" href="#"><i class="fas fa-heart"></i></a>
+      @if (Auth::user())
+        <a id="navbarDropdown" class="navbar-icon" href="#" role="button" data-bs-toggle="dropdown"
+          aria-haspopup="true" aria-expanded="false" v-pre>
+          <i class="fas fa-user"></i>
+          <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+            <a class="dropdown-item" href="{{ route('logout') }}"
+              onclick="event.preventDefault();
+                      document.getElementById('logout-form').submit();">
+              {{ __('Logout') }}
+            </a>
+
+            <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+              @csrf
+            </form>
+          </div>
+        @else
+          <a class="navbar-icon" href="{{ route('login') }}"><i class="fas fa-user"></i></a>
+      @endif
+
+      </a>
+    </nav>
+    <div class="mobile-logo">
+      <img src="http://127.0.0.1:8000/logos/trendbazaar-high-resolution-logo-transparent.png"
+        style="width: 144px;overflow: hidden;margin-left: 10px;" alt="" class="mt-2">
+      <a class="navbar-icon" href="#"><i class="fas fa-search"></i></a>
+    </div>
+    <main class="pt-5 main-padding">
+
       @yield('content')
     </main>
   </div>
+
   <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
-  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-    integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
     integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
     integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-
   <script src="{{ asset('assets/js/custom-script.js') }}"></script>
+  <script src="{{ asset('jquery.js') }}"></script>
+
+  <script>
+    $(document).ready(function($) {
+      $('.increment').click(function() {
+        let $counter = $(this).parent().find('.counter');
+        console.log($counter);
+        let count = parseInt($counter.text());
+        count++;
+        $counter.text(count);
+        console.log('this is increment function');
+        updateQuantity($(this).parent());
+      });
+
+      $('.decrement').click(function() {
+        let $counter = $(this).parent().find('.counter');
+        let count = parseInt($counter.text());
+        if (count > 1) {
+          count--;
+          $counter.text(count);
+          updateQuantity($(this).parent());
+        }
+      });
+
+      // update quantity in the database
+      function updateQuantity($cartItem) {
+        let productId = $cartItem.find('.product-id').val();
+        let quantity = $cartItem.find('.counter').text();
+
+        $.ajax({
+          url: `/cart/${productId}`,
+          type: 'PUT',
+          headers: {
+            'X-CSRF-TOKEN': '{{ csrf_token() }}',
+          },
+          data: JSON.stringify({
+            quantity: quantity
+          }),
+          contentType: 'application/json',
+          success: function(response) {
+            console.log(response);
+            updateTotals(productId);
+          },
+          error: function(xhr, status, error) {
+            console.error('Error:', error);
+          }
+        });
+      }
+
+      //update the total in cart
+      function updateTotals(productId) {
+        $.ajax({
+          url: "cart/total",
+          type: 'GET',
+          success: function(response) {
+            console.log(response);
+            $('#totalItems').text(response.totalItems);
+            $('#totalAmount').text(response.totalAmount);
+          },
+          error: function(xhr, status, error) {
+            console.error('Error:', error);
+          }
+        });
+      }
+
+      // Pop-up notification of item sold
+      const $notificationToast = $('[data-toast]');
+      const $toastCloseBtn = $('[data-toast-close]');
+      $toastCloseBtn.on('click', function() {
+        $notificationToast.addClass('closed');
+      });
+
+    });
+
+    // Show specific image in carousel
+    jQuery(document).ready(function($) {
+
+      function updateCarousel(index) {
+        $('#productCarousel').carousel(index);
+      }
+
+      function prevSlide() {
+        $('#productCarousel').carousel('prev');
+      }
+
+      function nextSlide() {
+        $('#productCarousel').carousel('next');
+      }
+
+      $('.row.justify-content-center img').click(function() {
+        var index = $(this).index();
+        updateCarousel(index);
+      });
+
+      $('.carousel-control-prev').click(function() {
+        prevSlide();
+      });
+
+      $('.carousel-control-next').click(function() {
+        nextSlide();
+      });
+    });
+  </script>
 </body>
 
 </html>

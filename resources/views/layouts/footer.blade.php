@@ -150,7 +150,7 @@
       <div class="container">
 
         <p class="copyright">
-          &copy; 2022 <a href="#">codewithsadee</a>. All Rights Reserved
+          &copy; 2024 <a href="#">Sufiyan Manihar</a>. All Rights Reserved
         </p>
 
         <ul class="footer-bottom-list">
@@ -172,7 +172,7 @@
         <div class="payment">
           <p class="payment-title">We Support</p>
 
-          <img src="{{ asset('images/payment-img.png') }}" alt="Online payment logos" class="payment-img">
+          <img src="{{asset('logos/payment.png')}}" alt="Online payment logos" class="payment-img">
         </div>
 
       </div>

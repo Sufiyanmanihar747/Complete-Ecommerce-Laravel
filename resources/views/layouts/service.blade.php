@@ -8,7 +8,6 @@
 
           <div class="service-content">
             <p class="service-item-title">Free Shipping</p>
-
             <p class="service-item-text">On All Order Over $599</p>
           </div>
         </li>

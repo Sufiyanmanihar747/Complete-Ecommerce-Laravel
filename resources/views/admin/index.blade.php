@@ -246,7 +246,7 @@
         imagePreviews.empty();
 
         // Limit to 5 images
-        var maxImages = 5;
+        var maxImages = 4;
         var numImages = Math.min(files.length, maxImages);
 
         for (var i = 0; i < numImages; i++) {

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\CartController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\SuperAdminController;
@@ -20,8 +21,11 @@ use Illuminate\Support\Facades\Route;
 
 
 Auth::routes();
+Route::resource('home', ProductController::class);
+Route::get('/cart/total', [CartController::class, 'total'])->name('cart.total');
+
 Route::middleware('auth')->group(function () {
-    Route::resource('home', ProductController::class);
+    Route::resource('cart', CartController::class);
 });
 
 Route::middleware('admin')->group(function () {

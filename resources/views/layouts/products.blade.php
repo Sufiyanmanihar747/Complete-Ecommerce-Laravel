@@ -22,7 +22,7 @@
         <li>
           <div class="product-card">
             <figure class="card-banner">
-              <a href="">
+              <a href="{{ route('home.show', [$product->id]) }}">
                 @php
                   $imageArray = explode(',', $product->images);
                 @endphp
@@ -34,14 +34,20 @@
                 <button class="card-action-btn" aria-label="Quick view">
                   <ion-icon name="eye-outline"></ion-icon>
                 </button>
-                <button class="card-action-btn cart-btn">
-                  <ion-icon name="bag-handle-outline" aria-hidden="true"></ion-icon>
-                  <p style="margin: 0">Add to Cart</p>
-                </button>
+                <form action="{{ route('cart.store') }}" method="post">
+                  @csrf
+                  <input type="hidden" name="product_id" value="{{ $product->id }}">
+                  <input type="hidden" name="quantity" value="1">
+                  <button type="submit" class="d-flex align-items-center h-100 btn-outline-dark p-1">
+                    <ion-icon name="bag-handle-outline" aria-hidden="true"></ion-icon>
+                    <p style="margin: 0">Add to Cart</p>
+                  </button>
+                </form>
                 <button class="card-action-btn" aria-label="Add to Whishlist">
                   <ion-icon name="heart-outline"></ion-icon>
                 </button>
               </div>
+              </a>
             </figure>
             <div class="card-content">
               <h3 class="h4 card-title">
@@ -59,6 +65,6 @@
         </li>
       @endforeach
     </ul>
-    <button class="btn btn-outline">View All Products</button>
+    <button class="btn btn-outline-dark d-flex w-50 h-25">View All Products</button>
   </div>
 </section>
