@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\CartItem;
 use App\Models\Product;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -14,7 +15,7 @@ class CartController extends Controller
      */
     public function index()
     {
-        $user = Auth::user();
+        $user = User::find(Auth::id());
         $cartItems = $user->cartItems()->with('product')->get();
 
         // dd($cartItems);
@@ -99,7 +100,7 @@ class CartController extends Controller
 
     public function total()
     {
-        $user = Auth::user();
+        $user = User::find(Auth::id());
         $cartItems = $user->cartItems()->with('product')->get();
 
         $totalItems = $cartItems->sum('quantity');

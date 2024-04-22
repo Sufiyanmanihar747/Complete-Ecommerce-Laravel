@@ -1,8 +1,16 @@
 <section class="section product">
+    <style>
+        @media(max-width:545px)
+        {
+            .product{
+                background-color: black;
+            }
+        }
+    </style>
   {{-- @dump($products) --}}
   <div class="container">
     <h2 class="h2 section-title">Products of the week</h2>
-    <ul class="filter-list">
+    <ul class="filter-list p-0">
       <li>
         <button class="filter-btn  active">Best Seller</button>
       </li>
@@ -21,7 +29,7 @@
       @foreach ($products as $product)
         <li>
           <div class="product-card">
-            <figure class="card-banner">
+            <figure class="card-banner flex-column">
               <a href="{{ route('home.show', [$product->id]) }}">
                 @php
                   $imageArray = explode(',', $product->images);

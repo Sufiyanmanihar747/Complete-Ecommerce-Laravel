@@ -179,7 +179,7 @@
         flex-wrap: wrap;
         justify-content: center;
         align-items: center;
-        gap: 40px;
+        gap: 5px;
     }
 
     .service-item {
@@ -188,7 +188,7 @@
         display: flex;
         justify-content: flex-start;
         align-items: center;
-        gap: 20px;
+        gap: 10px;
     }
 
     .service-item-icon {
@@ -742,20 +742,6 @@
         .product-card .card-banner {
             overflow: hidden;
         }
-
-        .product-card .card-banner:hover .card-actions {
-            visibility: visible;
-            transform: translateY(0);
-        }
-
-        .product-card .card-action-btn:first-child {
-            border-radius: 6px 0 0 6px;
-        }
-
-        .product-card .card-action-btn:last-child {
-            border-radius: 0 6px 6px 0;
-        }
-
         /**
  * NEWSLETTER
  */
@@ -812,3 +798,8 @@
             justify-content: space-between;
         }
     }
+@media (max-width:991px) {
+    .product-card .card-actions{
+        display: none;
+    }
+}

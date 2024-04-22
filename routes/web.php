@@ -3,8 +3,10 @@
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\SuperAdminController;
+use App\Models\Order;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -26,6 +28,7 @@ Route::get('/cart/total', [CartController::class, 'total'])->name('cart.total');
 
 Route::middleware('auth')->group(function () {
     Route::resource('cart', CartController::class);
+    Route::resource('order', OrderController::class);
 });
 
 Route::middleware('admin')->group(function () {

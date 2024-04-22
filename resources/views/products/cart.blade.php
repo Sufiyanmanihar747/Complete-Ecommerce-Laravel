@@ -20,7 +20,7 @@
           @endphp
 
           <div class="col-md-2" style="align-self: center">
-            <div id="productCarousel" class="carousel slide" data-interval="false">
+            <div class="carousel slide" data-interval="false">
               <div class="carousel-inner">
                 @php
                   $imageArray = explode(',', $item->product->images);
@@ -55,13 +55,13 @@
           <input type="hidden" class="quantity" value="{{ $item->quantity }}">
           <div style="border: 1px solid #d8d8d8;margin: 24px 0px;"></div>
         @endforeach
-        <div class="d-flex justify-content-between">
-          <h4 class="d-flex">Total Items: <span id="totalItems">{{ $totalItems }}</span></h4>
-          <h4 class="d-flex">Total Amount: &#8377;<span id="totalAmount">{{ $totalAmount }}</span></h4>
-        </div>
-        <div class="mt-3">
-          <a href="">
-            <button class="btn btn-warning w-100">
+        <div class="d-flex justify-content-between align-items-center">
+          <div>
+            <h4 class="d-flex">Total Items: <span id="totalItems">{{ $totalItems }}</span></h4>
+            <h4 class="d-flex">Total Amount: &#8377;<span id="totalAmount">{{ $totalAmount }}</span></h4>
+          </div>
+          <a href="{{ route('order.create') }}">
+            <button class="btn btn-success">
               Proceed to Buy
             </button>
           </a>

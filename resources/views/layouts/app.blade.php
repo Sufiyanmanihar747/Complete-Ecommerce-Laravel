@@ -336,13 +336,16 @@
                           document.getElementById('logout-form').submit();">
                   {{ __('Logout') }}
                 </a>
-
+                <a class="dropdown-item" href="{{ route('order.index') }}">
+                  {{ __('Orders') }}
+                </a>
                 <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                   @csrf
                 </form>
               </div>
             @else
-              <a class="nav-link " href="{{ route('login') }}">{{ __('Login') }}<i class="fas fa-sign-in-alt"></i></a>
+              <a class="nav-link " href="{{ route('login') }}">{{ __('Login') }}<i
+                  class="fas fa-sign-in-alt"></i></a>
           @endif
           </li>
         </ul>
@@ -386,8 +389,8 @@
       @yield('content')
     </main>
   </div>
-
-  <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+    integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
     integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
@@ -396,6 +399,11 @@
   <script src="{{ asset('jquery.js') }}"></script>
 
   <script>
+
+    //sweet alert for order successfull
+
+
+    //increasing and decrreasing quantiy using ajax
     $(document).ready(function($) {
       $('.increment').click(function() {
         let $counter = $(this).parent().find('.counter');
