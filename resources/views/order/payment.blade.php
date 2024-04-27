@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-  {{-- @dd($cartItems[0]) --}}
+  {{-- @dump($addresses) --}}
   <div class="container d-flex my-3 gap-4">
 
     <div class="container my-5 rounded p-3 shadow-lg bg-white">
@@ -61,6 +61,7 @@
         <div class="card">
           <div class="card-body">
             <h5 class="mb-5 text-center">PAYMENT METHODS</h5>
+
             {!! Form::open([
                 'url' => route('order.store'),
                 'method' => 'POST',
@@ -69,13 +70,20 @@
             @csrf
             {!! Form::text('cart', $cartItems, ['class' => 'd-none']) !!}
             <div class="form-group">
+              {!! Form::label('old_address', 'Select Address:') !!}
+              {!! Form::select('old_address', $addresses->pluck('address', 'id'), null, [
+                  'class' => 'form-control',
+                  'placeholder' => 'Select an address',
+                  'id' => 'old_address_select',
+              ]) !!}
+            </div>
+            <div class="form-group">
               {!! Form::label('delivery_address', 'Delivery Address:') !!}
-              {!! Form::textarea('delivery_address', null, [
+              {!! Form::textarea('new_address', null, [
                   'class' => 'form-control',
                   'id' => 'deliveryAddress',
                   'rows' => 3,
                   'placeholder' => 'Enter your delivery address',
-                  'required',
               ]) !!}
             </div>
             <div class="form-group">
@@ -177,7 +185,8 @@
               }).then((result) => {
                 // Redirect to the order page after clicking the "OK" button
                 if (result.isConfirmed) {
-                  window.location.href ='{{route('order.index')}}'; // Replace $orderId with the actual order ID
+                  window.location.href =
+                    '{{ route('order.index') }}'; // Replace $orderId with the actual order ID
                 }
               });
 
@@ -214,9 +223,6 @@
       });
     });
 
-
-
-
     $(document).ready(function() {
       $('#paymentMethod').change(function() {
         var selectedMethod = $(this).val();
@@ -236,6 +242,18 @@
         var formData = $(this).serializeArray();
         console.log(formData);
       });
+    });
+
+    //this is for diable the field
+    $(document).ready(function () {
+        $('#old_address_select').on('change', function () {
+            var selectedOption = $(this).val();
+            if (selectedOption !== '') {
+                $('#deliveryAddress').prop('disabled', true); // Disable text area
+            } else {
+                $('#deliveryAddress').prop('disabled', false); // Enable text area
+            }
+        });
     });
   </script>
 @endsection

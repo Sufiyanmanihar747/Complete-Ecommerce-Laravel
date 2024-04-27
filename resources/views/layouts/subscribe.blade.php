@@ -10,14 +10,11 @@
       </p>
 
       <form action="" class="card-form">
-
         <div class="input-wrapper">
           <ion-icon name="mail-outline"></ion-icon>
-
           <input type="email" name="emal" placeholder="Enter your email" required class="input-field">
         </div>
-
-        <button type="submit" class="btn btn-primary d-flex">
+        <button type="submit" class="btn btn-outline-dark d-flex align-items-center">
           <span>Subscribe</span>
           <ion-icon name="arrow-forward" aria-hidden="true"></ion-icon>
         </button>

@@ -55,6 +55,7 @@
             'class' => 'form-control h-75',
             'placeholder' => 'Enter title',
             'style' => 'text-transform: capitalize;',
+            'required',
         ]) !!}
       </div>
 
@@ -71,6 +72,7 @@
             'required' => 'required',
             'step' => '0.01',
             'min' => '0.01',
+            'required',
         ]) !!}
       </div>
     </div>
@@ -86,6 +88,7 @@
         {!! Form::text('company', isset($product) ? $product->company : null, [
             'class' => 'form-control h-75',
             'placeholder' => 'Enter your company',
+            'required',
         ]) !!}
       </div>
 
@@ -105,13 +108,13 @@
           {!! Form::select('category_id', $categories, $product->category_id, [
               'class' => 'form-control h-75',
               'placeholder' => 'Select category',
-              'required' => 'required',
+              'required',
           ]) !!}
         @else
           {!! Form::select('category_id', $categories, null, [
               'class' => 'form-control h-75',
               'placeholder' => 'Select category',
-              'required' => 'required',
+              'required',
           ]) !!}
         @endif
 
@@ -129,6 +132,7 @@
         {!! Form::tel('description', isset($product) ? $product->description : null, [
             'class' => 'form-control h-75',
             'placeholder' => 'Enter your description',
+            'required',
         ]) !!}
       </div>
 

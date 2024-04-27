@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-  <div class="container my-5 bg-white rounded p-3 shadow-lg">
+  <div class="container my-4 bg-white rounded p-3 shadow-lg">
     {{-- @dump($product) --}}
     <div class="row">
       <div class="col-md-6">
@@ -40,7 +40,7 @@
         <hr>
         <p class=""><b>Price: </b>&#8377;{{ $product->price }}</p>
         <p class=""><b>Brand: </b>{{ $product->company }}</p>
-        <p class=""><b>Category: </b>{{ $product->categories->name }}</p>
+        <p class=""><b>Category: </b>{{ $product->categories->name ?? 'Null' }}</p>
         <p class=""><b>Description: </b>{{ $product->description }}</p>
         <div class="row mb-3">
           <div class="col d-flex flex-column align-items-center">

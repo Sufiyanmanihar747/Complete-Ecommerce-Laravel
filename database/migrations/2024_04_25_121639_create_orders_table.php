@@ -14,8 +14,8 @@ return new class extends Migration
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
+            $table->foreignId('address_id')->after('user_id')->constrained();
             $table->enum('status', ['pending', 'processing', 'shipped', 'delivered', 'cancelled'])->default('pending');
-            $table->string('delivery_address');
             $table->enum('payment_method', ['credit card', 'paypal', 'bank transfer', 'cash on delivery']);
             $table->decimal('total_amount', 10, 2);
             $table->timestamps();

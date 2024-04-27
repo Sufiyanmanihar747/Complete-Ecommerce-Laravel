@@ -32,7 +32,7 @@
           </div>
 
           <div class="col-md-8 d-flex flex-column">
-            <h2 class="">{{ $item->product->title }}</h2>
+            <h3 class="">{{ $item->product->title }}</h3>
             <p class=""><b>Brand: </b>{{ $item->product->company }}</p>
             <p class=""><b>Category: </b>{{ $item->product->categories->name }}</p>
             <p class=""><b>Description: </b>{{ $item->product->description }}</p>

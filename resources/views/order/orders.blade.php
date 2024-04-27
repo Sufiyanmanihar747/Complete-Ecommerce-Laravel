@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
+  {{-- @dd($allOrders) --}}
 
   @if ($allOrders->isEmpty())
     <div class="p-5 display-6 text-center">
@@ -14,7 +15,9 @@
       <div class="container my-5 bg-white rounded p-3 shadow-lg">
         <div class="d-flex justify-content-between">
           <div>
-            <p><b>Delivery Address:</b> {{ $order->delivery_address }}</h4>
+            <p><b>Delivery Address:</b>
+              {{ $order->address->address }}
+            </p>
             <p><b>Status: </b>{{ $order->status }}</p>
           </div>
           <div>
