@@ -4,7 +4,7 @@
   {{-- @dump($addresses) --}}
   <div class="container d-flex my-3 gap-4">
 
-    <div class="container my-5 rounded p-3 shadow-lg bg-white">
+    <div class="container my-4 rounded p-3 shadow-lg background-transparent">
       <h5 class="mb-5 text-center">ORDER SUMMARY</h5>
       @if ($cartItems->isEmpty())
         <div class="alert alert-info p-5 display-6 text-center">
@@ -38,9 +38,7 @@
               <h5 class="">{{ $item->product->title }}</h5>
               <p class=""><b>Brand: </b>{{ $item->product->company }}</p>
               <div class="col-md-2 d-flex align-items-center justify-content-start p-0 my-2 ">
-                <button class="btn btn-dark counter-btn decrement">-</button>
-                <span class="mx-2 counter" style="font-size: x-large;">{{ $item->quantity }}</span>
-                <button class="btn btn-dark counter-btn increment">+</button>
+                <p class=""><b>Quantity: </b>{{$totalItems}}</p>
                 <input type="hidden" class="product-id" value="{{ $item->id }}">
               </div>
             </div>
@@ -56,9 +54,9 @@
         </div>
       @endif
     </div>
-    <div class="my-5">
+    <div class="my-4">
       <div style="position: sticky;top: 80px;">
-        <div class="card">
+        <div class="card background-transparent">
           <div class="card-body">
             <h5 class="mb-5 text-center">PAYMENT METHODS</h5>
 
@@ -160,19 +158,16 @@
       orderForm.addEventListener('submit', function(event) {
         event.preventDefault(); // Prevent the default form submission
 
-        // Perform any additional processing or validation here
-
-        // Simulate form data (you may need to adjust this based on your form structure)
         var formData = new FormData(orderForm);
 
-        // Send the form data to the server using fetch API
+        // send the form data
         fetch(orderForm.action, {
             method: 'POST',
             body: formData
           })
           .then(response => {
             if (response.ok) {
-              // Form submission was successful, show SweetAlert for order success
+              // show alert for order success
               Swal.fire({
                 title: 'Order Successful!',
                 text: 'Thank you for your purchase.',
@@ -183,14 +178,13 @@
                   confirmButton: 'btn btn-primary'
                 }
               }).then((result) => {
-                // Redirect to the order page after clicking the "OK" button
+                // redirect to the order page
                 if (result.isConfirmed) {
                   window.location.href =
-                    '{{ route('order.index') }}'; // Replace $orderId with the actual order ID
+                    '{{ route('order.index') }}';
                 }
               });
 
-              // Reset the form if needed
               orderForm.reset();
             } else {
               // Handle errors or failed submissions here

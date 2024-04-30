@@ -12,7 +12,7 @@
       @php
         $totalItems = 0;
       @endphp
-      <div class="container my-5 bg-white rounded p-3 shadow-lg">
+      <div class="container my-5 background-transparent rounded p-3 shadow-lg">
         <div class="d-flex justify-content-between">
           <div>
             <p><b>Delivery Address:</b>

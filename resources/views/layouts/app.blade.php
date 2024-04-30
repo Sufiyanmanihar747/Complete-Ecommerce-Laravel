@@ -194,8 +194,9 @@
     }
 
     .navbar-nav .nav-link {
-      font-size: 1.5rem;
+      font-size: 1rem;
       color: black;
+      font-weight: bold;
     }
 
     .navbar-nav .nav-item:hover .nav-link {
@@ -274,11 +275,26 @@
     .cart-count {
       position: absolute;
       top: 10px;
-      right: 119px;
+      right: 99px;
       border-radius: 20px;
       font-size: 15px;
       background-color: #ffc800;
       padding: 0px 4px;
+    }
+
+    .offcanvas-backdrop {
+      background-color: transparent !important;
+    }
+
+    .offcanvas {
+      backdrop-filter: blur(10px);
+      background-color: #ffffff69;
+      width: 300px !important;
+    }
+
+    .background-transparent {
+      backdrop-filter: blur(10px);
+      background-color: #ffffff69
     }
   </style>
 </head>
@@ -286,6 +302,31 @@
 <body style="background: linear-gradient(to right, #aedbff, #c0ffc0);
 ">
   <div id="app">
+    {{-- ofcanvas of user --}}
+    <div class="offcanvas offcanvas-end p-2" style="z-index: 20000" tabindex="-1" id="offcanvasRight"
+      aria-labelledby="offcanvasRightLabel">
+      <div class="offcanvas-header">
+        <h5 class="offcanvas-title" id="offcanvasRightLabel">My Profile</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+      </div>
+      <div class="offcanvas-body">
+        <ul class="list-unstyled">
+          @if (Auth::user())
+            <li><a class="dropdown-item" href="{{ route('order.index') }}">Orders</a></li>
+          @endif
+        </ul>
+      </div>
+      <div class="offcanvas-footer">
+        <li>
+          <a class="dropdown-item bg-danger text-white" href="{{ route('logout') }}"
+            onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+            {{ __('Logout') }}
+          </a>
+        </li>
+        <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">@csrf</form>
+      </div>
+    </div>
+
     <nav class="navbar navbar-expand-lg p-0 px-4"
       style="height: 70px;position: fixed; z-index: 1000;width: 100vw;backdrop-filter: blur(10px);background-color: #ffffff69;">
       <a class="navbar-brand p-0" href="{{ route('home.index') }}"><img
@@ -294,24 +335,18 @@
       <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
         <ul class="navbar-nav ml-auto gap-5">
           <li class="nav-item active">
-            <a class="nav-link" href="#"> Home <span class="sr-only">(current)</span></a>
+            <a class="nav-link" href="{{ route('home.index') }}"> HOME</a>
           </li>
           <li class="nav-item dropdown">
-            <a class="nav-link" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
-              aria-haspopup="true" aria-expanded="false">Category</a>
-            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <a class="dropdown-item" href="#">General Inquiry</a>
-              <a class="dropdown-item" href="#">Sales</a>
-              <a class="dropdown-item" href="#">Support</a>
-            </div>
+            <a class="nav-link" href="#category" role="button" aria-haspopup="true" aria-expanded="false">CATEGORY</a>
           </li>
 
           <li class="nav-item">
-            <a class="nav-link" href="#"> About</a>
+            <a class="nav-link" href="#"> OFFERS</a>
           </li>
           <li class="nav-item dropdown">
             <a class="nav-link" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
-              aria-haspopup="true" aria-expanded="false"></i> Contact</a>
+              aria-haspopup="true" aria-expanded="false"></i> CONTACT US</a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
               <a class="dropdown-item" href="#">General Inquiry</a>
               <a class="dropdown-item" href="#">Sales</a>
@@ -325,24 +360,12 @@
               <a class="nav-link" href="{{ route('cart.index') }}"><i class="fas fa-shopping-cart"></i><span
                   class="cart-count">{{ DB::table('cart_items')->where('user_id', Auth::id())->count() }}</span></a>
             </li>
-            <li class="nav-item dropdown">
-              <a id="navbarDropdown" class="nav-link" href="#" role="button" data-bs-toggle="dropdown"
-                aria-haspopup="true" aria-expanded="false" v-pre>
+            <li>
+              <a type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight"
+                aria-controls="offcanvasRight" class="nav-link" href="#" role="button" aria-haspopup="true"
+                aria-expanded="false" v-pre>
                 {{ Auth::user()->name }}
               </a>
-              <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                <a class="dropdown-item" href="{{ route('logout') }}"
-                  onclick="event.preventDefault();
-                          document.getElementById('logout-form').submit();">
-                  {{ __('Logout') }}
-                </a>
-                <a class="dropdown-item" href="{{ route('order.index') }}">
-                  {{ __('Orders') }}
-                </a>
-                <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                  @csrf
-                </form>
-              </div>
             @else
               <a class="nav-link " href="{{ route('login') }}">{{ __('Login') }}<i
                   class="fas fa-sign-in-alt"></i></a>
@@ -350,31 +373,22 @@
           </li>
         </ul>
       </div>
+
     </nav>
     <nav class="first-nav navbar-expand-lg navbar-light"
       style="z-index: 1000;backdrop-filter: blur(10px);background-color: #ffffff69;">
-      <a class="navbar-brand" href="#">
+      <a class="navbar-brand" href="{{ route('home.index') }}">
         <i class="fas fa-store navbar-icon"></i>
       </a>
-      <a class="navbar-icon" href="#"><i class="fas fa-shopping-cart"></i></a>
+      <a class="navbar-icon" href="{{ route('cart.index') }}"><i class="fas fa-shopping-cart"></i></a>
       <a class="navbar-icon" href="#"><i class="fas fa-heart"></i></a>
       @if (Auth::user())
-        <a id="navbarDropdown" class="navbar-icon" href="#" role="button" data-bs-toggle="dropdown"
-          aria-haspopup="true" aria-expanded="false" v-pre>
+        <a type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight"
+          class="navbar-icon" href="#" role="button" aria-haspopup="true" aria-expanded="false" v-pre>
           <i class="fas fa-user"></i>
-          <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-            <a class="dropdown-item" href="{{ route('logout') }}"
-              onclick="event.preventDefault();
-                      document.getElementById('logout-form').submit();">
-              {{ __('Logout') }}
-            </a>
-
-            <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-              @csrf
-            </form>
-          </div>
-        @else
-          <a class="navbar-icon" href="{{ route('login') }}"><i class="fas fa-user"></i></a>
+        </a>
+      @else
+        <a class="navbar-icon" href="{{ route('login') }}"><i class="fas fa-user"></i></a>
       @endif
 
       </a>
@@ -385,7 +399,6 @@
       <a class="navbar-icon" href="#"><i class="fas fa-search"></i></a>
     </div>
     <main class="pt-5 main-padding">
-
       @yield('content')
     </main>
   </div>
@@ -400,7 +413,6 @@
   <script src="{{ asset('jquery.js') }}"></script>
 
   <script>
-
     //sweet alert for order successfull
 
 

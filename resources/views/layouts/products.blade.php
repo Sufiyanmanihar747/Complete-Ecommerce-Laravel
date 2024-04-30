@@ -83,7 +83,7 @@
             </figure>
             <div class="card-content">
               <h3 class="h4 card-title">
-                <h5>{{ $product->title }}</h5>
+                <h5 class="text-capitalize">{{ $product->title }}</h5>
               </h3>
               {{-- <div class="card-price">
                 <p style="font-weight: 100; margin:0">{{ $product->description }}</p>
@@ -98,7 +98,7 @@
       @endforeach
     </ul>
     <div class="w-100 d-flex">
-        <button class="btn btn-outline-dark text-center w-25">View All Products</button>
+        <button class="btn btn-outline-dark text-center w-50">View All Products</button>
     </div>
   </div>
 </section>

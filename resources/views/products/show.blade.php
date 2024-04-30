@@ -1,10 +1,10 @@
 @extends('layouts.app')
 
 @section('content')
-  <div class="container my-4 bg-white rounded p-3 shadow-lg">
+  <div class="container my-4 rounded p-3 shadow-lg background-transparent">
     {{-- @dump($product) --}}
     <div class="row">
-      <div class="col-md-6">
+      <div class="col-md-5">
         <div id="productCarousel" class="carousel slide" data-interval="false">
           <div class="carousel-inner">
             @php
@@ -35,14 +35,14 @@
         </div>
       </div>
 
-      <div class="col-md-6 d-flex flex-column">
-        <h2 class="">{{ $product->title }}</h2>
+      <div class="col-md-6 d-flex flex-column justify-content-center">
+        <h4 class="text-capitalize">{{ $product->title }}</h4>
         <hr>
-        <p class=""><b>Price: </b>&#8377;{{ $product->price }}</p>
+        <p style="font-size: 26px;">&#8377;{{ $product->price }}</p>
         <p class=""><b>Brand: </b>{{ $product->company }}</p>
         <p class=""><b>Category: </b>{{ $product->categories->name ?? 'Null' }}</p>
         <p class=""><b>Description: </b>{{ $product->description }}</p>
-        <div class="row mb-3">
+        <div class="row my-3">
           <div class="col d-flex flex-column align-items-center">
             <div>
               <img src="{{ asset('logos/service-icon-1.svg') }}" alt="Service icon">
@@ -80,12 +80,11 @@
           @csrf
           <input type="hidden" name="product_id" value="{{ $product->id }}">
           <input type="hidden" name="quantity" value="1">
-          <button type="submit" class="btn btn-dark w-100">
+          <button type="submit" class="btn btn-dark w-100 mb-2">
             Add to Cart
           </button>
         </form>
-        <br>
-        <a href="#">
+        <a href="{{route('order.create',[$product->id])}}">
           <button class="btn btn-warning w-100">
             Buy Now
           </button>

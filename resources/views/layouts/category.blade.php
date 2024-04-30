@@ -1,4 +1,4 @@
-<section class="section category pb-1">
+<section class="section category pb-1" id="category">
   <div class="container">
     <div id="categoryCarousel" class="carousel slide" data-ride="carousel">
       <div class="carousel-inner">
@@ -14,7 +14,7 @@
               <img src="{{ url('storage/images/' . $category->image) }}" alt="{{ $category->name }}" loading="lazy"
                 class="w-100">
             </figure>
-            <a href="#" class="btn font-weight-bold d-flex">{{ $category->name }}</a>
+            <a href="{{route('categoryproduct.show',[$category->id])}}" class="btn font-weight-bold d-flex">{{ $category->name }}</a>
           </div>
           @php $counter++; @endphp
           @if ($counter % 3 == 0 || $loop->last)

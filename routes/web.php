@@ -36,6 +36,7 @@ Route::middleware('admin')->group(function () {
     Route::get('dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
 });
 
+Route::resource('categoryproduct' ,CategoryController::class)->only(['show']);
 Route::middleware('superadmin')->group(function () {
     Route::resource('superadmin', SuperAdminController::class);
     Route::get('superdashboard', [SuperAdminController::class, 'superdashboard'])->name('superadmin.superdashboard');
