@@ -3,9 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
+use App\Models\Order;
+use App\Models\OrderItem;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 
 
@@ -130,5 +133,19 @@ class AdminController extends Controller
     public function dashboard()
     {
         return view('admin.dashboard');
+    }
+
+    public function orders()
+    {
+        $admin = Auth::id();
+        $orderedProductIds = DB::table('order_items')
+            ->select('order_items.*', 'orders.payment_method', 'products.title')
+            ->join('products', 'order_items.product_id', '=', 'products.id')
+            ->join('orders', 'order_items.order_id', '=', 'orders.id')
+            ->where('products.user_id', $admin)
+            ->get();
+
+        // dd($orderedProductIds);
+        return view('admin.orders', compact('orderedProductIds'));
     }
 }

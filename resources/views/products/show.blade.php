@@ -48,7 +48,7 @@
               <img src="{{ asset('logos/service-icon-1.svg') }}" alt="Service icon">
             </div>
             <div>
-              <p class="m-0">Free Delivery</p>
+              <p class="m-0 text-center">Free Delivery</p>
             </div>
           </div>
           <div class="col d-flex flex-column align-items-center">
@@ -56,7 +56,7 @@
               <img src="{{ asset('logos/service-icon-2.svg') }}" alt="Service icon">
             </div>
             <div>
-              <p class="m-0">Easy Returns</p>
+              <p class="m-0 text-center">Easy Returns</p>
             </div>
           </div>
           <div class="col d-flex flex-column align-items-center">
@@ -64,7 +64,7 @@
               <img src="{{ asset('logos/service-icon-3.svg') }}" alt="Service icon">
             </div>
             <div>
-              <p class="m-0">SecurePayment</p>
+              <p class="m-0 text-center">SecurePayment</p>
             </div>
           </div>
           <div class="col d-flex flex-column align-items-center">
@@ -72,7 +72,7 @@
               <img src="{{ asset('logos/service-icon-4.svg') }}" alt="Service icon">
             </div>
             <div>
-              <p class="m-0">Special Support</p>
+              <p class="m-0 text-center">Special Support</p>
             </div>
           </div>
         </div>
@@ -84,7 +84,7 @@
             Add to Cart
           </button>
         </form>
-        <a href="{{route('order.create',[$product->id])}}">
+        <a href="{{route('order.show',[$product->id])}}">
           <button class="btn btn-warning w-100">
             Buy Now
           </button>

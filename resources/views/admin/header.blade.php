@@ -13,7 +13,7 @@
       </a>
     </li>
     <li>
-      <a href="#" class="nav-link text-white">
+      <a href="{{route('admin.orders')}}" class="nav-link text-white">
         Orders
       </a>
     </li>

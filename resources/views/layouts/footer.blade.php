@@ -5,11 +5,6 @@
       <div class="container">
 
         <div class="footer-brand">
-
-          <a href="#" class="logo">
-            <img src="{{ asset('images/logo.svg"') }} alt="TrendBazaar logo">
-          </a>
-
           <p class="footer-text">
             TrendBazaar is a fashion theme for presents a complete wardrobe of uniquely crafted Ethnic Wear, Casuals,
             Edgy
@@ -150,7 +145,7 @@
       <div class="container">
 
         <p class="copyright">
-          &copy; 2024 <a href="#">Sufiyan Manihar</a>. All Rights Reserved
+          &copy; 2024 <a href="https://sufiyan-manihar-portfolio.netlify.app/">Made by SUFIYAN MANIHAR</a>. All Rights Reserved
         </p>
 
         <ul class="footer-bottom-list">

@@ -6,6 +6,7 @@ use App\Models\CartItem;
 use App\Models\Order;
 use App\Models\Address;
 use App\Models\OrderItem;
+use App\Models\Product;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -31,6 +32,7 @@ class OrderController extends Controller
         $cartItems = $user->cartItems()->with('product')->get();
         $addresses = $user->addresses()->get();
         // dd($addresses);
+        // var_dump($cartItems);
         return view('order.payment', compact('cartItems'), compact('addresses'));
     }
 
@@ -59,15 +61,26 @@ class OrderController extends Controller
         $order = Order::create($orderData);
         $order_id = $order->id;
 
+
         //for order_items
-        $cartItems = json_decode($request->input('cart'), true);
-        foreach ($cartItems as $item) {
-            $product = $item['product'];
+        if ($request->input('cart')) {
+            $cartItems = json_decode($request->input('cart'), true);
+            foreach ($cartItems as $item) {
+                $product = $item['product'];
+                $orderItemData = [
+                    'order_id' => $order_id,
+                    'product_id' => $product['id'],
+                    'quantity' => $item['quantity'],
+                    'price' => $product['price'],
+                ];
+                OrderItem::create($orderItemData);
+            }
+        } else {
             $orderItemData = [
                 'order_id' => $order_id,
-                'product_id' => $product['id'],
-                'quantity' => $item['quantity'],
-                'price' => $product['price'],
+                'product_id' => $request['id'],
+                'quantity' => 1,
+                'price' => $request['total_amount'],
             ];
             OrderItem::create($orderItemData);
         }
@@ -78,10 +91,12 @@ class OrderController extends Controller
      */
     public function show(string $id)
     {
-        dump('this is show page of ordercontroller');
-        dd($id);
-        $cartItems = CartItem::find($id);
-        return view('order.payment', compact('cartItems'));
+        // dd($id);
+        $user = User::find(Auth::id());
+        $addresses = $user->addresses()->get();
+        $product  = Product::find($id);
+        $product['quantity'] = 1;
+        return view('order.specificpayment', compact('product', 'addresses'));
     }
 
     /**

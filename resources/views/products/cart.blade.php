@@ -18,31 +18,32 @@
             $totalItems += $item->quantity;
             $totalAmount += $item->quantity * $item->product->price;
           @endphp
-
-          <div class="col-md-2" style="align-self: center">
-            <div class="carousel slide" data-interval="false">
-              <div class="carousel-inner">
-                @php
-                  $imageArray = explode(',', $item->product->images);
-                @endphp
-                <img src="{{ isset($imageArray[0]) ? url('storage/images/' . $imageArray[0]) : 'null' }}" class="w-100"
-                  alt="{{ $imageArray[0] }}">
+            <div class="col-md-2 col-5" style="align-self: center">
+              <div class="carousel slide" data-interval="false">
+                <div class="carousel-inner">
+                  @php
+                    $imageArray = explode(',', $item->product->images);
+                  @endphp
+                  <img src="{{ isset($imageArray[0]) ? url('storage/images/' . $imageArray[0]) : 'null' }}" class="w-100"
+                    alt="{{ $imageArray[0] }}">
+                </div>
               </div>
             </div>
-          </div>
 
-          <div class="col-md-8 d-flex flex-column">
-            <h4 class="text-capitalize">{{ $item->product->title }}</h4>
-            <p class=""><b>Brand: </b>{{ $item->product->company }}</p>
-            <p class=""><b>Category: </b>{{ $item->product->categories->name }}</p>
-            <p class=""><b>Description: </b>{{ $item->product->description }}</p>
-            <div class="col-md-2 d-flex align-items-center justify-content-start p-0 my-2 ">
-              <button class="btn btn-dark counter-btn decrement d-flex align-items-center justify-content-center">-</button>
-              <span class="mx-2 counter" style="font-size: x-large;">{{ $item->quantity }}</span>
-              <button class="btn btn-dark counter-btn increment  d-flex align-items-center justify-content-center">+</button>
-              <input type="hidden" class="product-id" value="{{ $item->id }}">
+            <div class="col-md-8 d-flex flex-column">
+              <h4 class="text-capitalize">{{ $item->product->title }}</h4>
+              <p class=""><b>Brand: </b>{{ $item->product->company }}</p>
+              <p class=""><b>Category: </b>{{ $item->product->categories->name }}</p>
+              <p class=""><b>Description: </b>{{ $item->product->description }}</p>
+              <div class="col-md-2 d-flex align-items-center justify-content-start p-0 my-2 ">
+                <button
+                  class="btn btn-dark counter-btn decrement d-flex align-items-center justify-content-center">-</button>
+                <span class="mx-2 counter" style="font-size: x-large;">{{ $item->quantity }}</span>
+                <button
+                  class="btn btn-dark counter-btn increment  d-flex align-items-center justify-content-center">+</button>
+                <input type="hidden" class="product-id" value="{{ $item->id }}">
+              </div>
             </div>
-          </div>
 
           <div class="col-md-2">
             <p style="font-size: 22px;"><b>&#8377;{{ $item->product->price }}</b></p>

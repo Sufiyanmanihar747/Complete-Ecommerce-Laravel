@@ -1,32 +1,27 @@
 <section class="section product">
   <style>
     @media(max-width:545px) {
-      .product {
-        /* background-color: white; */
-      }
-
       .product-list {
         display: flex;
         flex-wrap: wrap;
         gap: 10px;
-        /* Adjust the gap as needed */
       }
 
       .product-item {
         flex: 0 0 calc(50% - 10px);
-        /* Two products per row with gap */
         max-width: calc(50% - 10px);
-        /* Two products per row with gap */
         margin-bottom: 20px;
-        /* Adjust spacing between rows */
       }
-      .card-content h5{
+
+      .card-content h5 {
         font-size: 18px;
       }
-      .product .container{
+
+      .product .container {
         padding: 0;
       }
-      .product ul{
+
+      .product ul {
         padding: 0;
       }
     }
@@ -98,7 +93,7 @@
       @endforeach
     </ul>
     <div class="w-100 d-flex">
-        <button class="btn btn-outline-dark text-center w-50">View All Products</button>
+      <button class="btn btn-outline-dark text-center w-50">View All Products</button>
     </div>
   </div>
 </section>

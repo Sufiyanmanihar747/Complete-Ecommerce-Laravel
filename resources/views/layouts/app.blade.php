@@ -114,7 +114,6 @@
     }
 
     .card {
-      width: 350px;
       border: none;
       border-radius: 10px;
       box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -375,13 +374,13 @@
       </div>
 
     </nav>
-    <nav class="first-nav navbar-expand-lg navbar-light"
+    <nav class="first-nav navbar-expand-lg navbar-light p-0"
       style="z-index: 1000;backdrop-filter: blur(10px);background-color: #ffffff69;">
       <a class="navbar-brand" href="{{ route('home.index') }}">
         <i class="fas fa-store navbar-icon"></i>
       </a>
       <a class="navbar-icon" href="{{ route('cart.index') }}"><i class="fas fa-shopping-cart"></i></a>
-      <a class="navbar-icon" href="#"><i class="fas fa-heart"></i></a>
+      <a class="navbar-icon" href="{{ route('order.index') }}"><i class="fas fa-shopping-bag"></i></a>
       @if (Auth::user())
         <a type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight"
           class="navbar-icon" href="#" role="button" aria-haspopup="true" aria-expanded="false" v-pre>
@@ -395,7 +394,7 @@
     </nav>
     <div class="mobile-logo">
       <img src="http://127.0.0.1:8000/logos/trendbazaar-high-resolution-logo-transparent.png"
-        style="width: 144px;overflow: hidden;margin-left: 10px;" alt="" class="mt-2">
+        style="width: 144px;overflow: hidden;margin-left: 10px;" alt="" class="mt-1">
       <a class="navbar-icon" href="#"><i class="fas fa-search"></i></a>
     </div>
     <main class="pt-5 main-padding">
@@ -409,12 +408,76 @@
     integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
     integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
   <script src="{{ asset('assets/js/custom-script.js') }}"></script>
   <script src="{{ asset('jquery.js') }}"></script>
 
   <script>
     //sweet alert for order successfull
+    document.addEventListener('DOMContentLoaded', function() {
+      var orderForm = document.getElementById('order-form');
 
+      orderForm.addEventListener('submit', function(event) {
+        event.preventDefault(); // Prevent the default form submission
+
+        var formData = new FormData(orderForm);
+
+        // send the form data
+        fetch(orderForm.action, {
+            method: 'POST',
+            body: formData
+          })
+          .then(response => {
+            if (response.ok) {
+              // show alert for order success
+              Swal.fire({
+                title: 'Order Successful!',
+                text: 'Thank you for your purchase.',
+                icon: 'success',
+                confirmButtonColor: '#3085d6',
+                confirmButtonText: 'OK',
+                customClass: {
+                  confirmButton: 'btn btn-primary'
+                }
+              }).then((result) => {
+                // redirect to the order page
+                if (result.isConfirmed) {
+                  window.location.href =
+                    '{{ route('order.index') }}';
+                }
+              });
+
+              orderForm.reset();
+            } else {
+              // Handle errors or failed submissions here
+              Swal.fire({
+                title: 'Error',
+                text: 'Failed to submit the order. Please try again later.',
+                icon: 'error',
+                confirmButtonColor: '#3085d6',
+                confirmButtonText: 'OK',
+                customClass: {
+                  confirmButton: 'btn btn-primary'
+                }
+              });
+            }
+          })
+          .catch(error => {
+            console.error('Error:', error);
+            // Handle network errors or other exceptions here
+            Swal.fire({
+              title: 'Error',
+              text: 'An error occurred while submitting the order. Please try again later.',
+              icon: 'error',
+              confirmButtonColor: '#3085d6',
+              confirmButtonText: 'OK',
+              customClass: {
+                confirmButton: 'btn btn-primary'
+              }
+            });
+          });
+      });
+    });
 
     //increasing and decrreasing quantiy using ajax
     $(document).ready(function($) {
@@ -516,7 +579,42 @@
         nextSlide();
       });
     });
+
+    //order submission
+    $(document).ready(function() {
+      $('#paymentMethod').change(function() {
+        var selectedMethod = $(this).val();
+
+        $('#creditCardFields, #paypalFields, #codFields').hide();
+        if (selectedMethod === 'creditCard') {
+          $('#creditCardFields').show();
+        } else if (selectedMethod === 'paypal') {
+          $('#paypalFields').show();
+        } else if (selectedMethod === 'cod') {
+          $('#codFields').show();
+        }
+      });
+
+      $('#paymentForm').submit(function(event) {
+        event.preventDefault();
+        var formData = $(this).serializeArray();
+        console.log(formData);
+      });
+    });
+
+    //this is for diable the field in order page
+    $(document).ready(function() {
+      $('#old_address_select').on('change', function() {
+        var selectedOption = $(this).val();
+        if (selectedOption !== '') {
+          $('#deliveryAddress').prop('disabled', true); // Disable text area
+        } else {
+          $('#deliveryAddress').prop('disabled', false); // Enable text area
+        }
+      });
+    });
   </script>
+
 </body>
 
 </html>

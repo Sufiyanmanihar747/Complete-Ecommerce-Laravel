@@ -1,8 +1,8 @@
 @extends('layouts.app')
 
 @section('content')
-  {{-- @dump($addresses) --}}
-  {{-- @dd($cartItems) --}}
+
+{{-- @dd($product) --}}
   <div class="container d-flex my-3 gap-4">
 
     <div class="container my-4 rounded p-3 shadow-lg background-transparent">
@@ -10,20 +10,13 @@
 
       <div class="row">
         @php
-          $totalItems = 0;
-          $totalAmount = 0;
+          $totalItems = 1;
         @endphp
-        @foreach ($cartItems as $item)
-          @php
-            $totalItems += $item->quantity;
-            $totalAmount += $item->quantity * $item->product->price;
-          @endphp
-
           <div class="col-md-2" style="align-self: center">
             <div class="carousel slide" data-interval="false">
               <div class="carousel-inner">
                 @php
-                  $imageArray = explode(',', $item->product->images);
+                  $imageArray = explode(',', $product->images);
                 @endphp
                 <img src="{{ isset($imageArray[0]) ? url('storage/images/' . $imageArray[0]) : 'null' }}" class="w-100"
                   alt="{{ $imageArray[0] }}">
@@ -32,20 +25,19 @@
           </div>
 
           <div class="col-md-8 d-flex flex-column">
-            <h5 class="">{{ $item->product->title }}</h5>
-            <p class=""><b>Brand: </b>{{ $item->product->company }}</p>
+            <h5 class="">{{ $product->title }}</h5>
+            <p class=""><b>Brand: </b>{{ $product->company }}</p>
             <div class="col-md-2 d-flex align-items-center justify-content-start p-0 my-2 ">
               <p class=""><b>Quantity: </b>{{ $totalItems }}</p>
-              <input type="hidden" class="product-id" value="{{ $item->id }}">
+              <input type="hidden" class="product-id" value="{{ $product->id }}">
             </div>
           </div>
 
           <div class="col-md-2">
-            <p style="font-size: 20px;"><b>&#8377;{{ $item->product->price }}</b></p>
+            <p style="font-size: 20px;"><b>&#8377;{{ $product->price }}</b></p>
           </div>
-          <input type="hidden" class="quantity" value="{{ $item->quantity }}">
+          <input type="hidden" class="quantity" value="{{ $product->quantity }}">
           <div style="border: 1px solid #d8d8d8;margin: 24px 0px;"></div>
-        @endforeach
         <div class="d-flex justify-content-between">
         </div>
       </div>
@@ -62,7 +54,7 @@
                 'id' => 'order-form',
             ]) !!}
             @csrf
-            {!! Form::text('cart', $cartItems, ['class' => 'd-none']) !!}
+            {!! Form::text('id', $product->id, ['class' => 'd-none']) !!}
             <div class="form-group">
               {!! Form::label('old_address', 'Select Address:') !!}
               {!! Form::select('old_address', $addresses->pluck('address', 'id'), null, [
@@ -84,8 +76,8 @@
               <p class="d-flex font-weight-bold">Total Items: <span id="totalItems"> {{ $totalItems }}</span></p>
             </div>
             <div class="form-group">
-              {!! Form::text('total_amount', $totalAmount, ['class' => 'd-none']) !!}
-              <p class="d-flex font-weight-bold">Total Payable:&#8377;<span id="totalAmount">{{ $totalAmount }}</span>
+              {!! Form::text('total_amount', $product->price, ['class' => 'd-none']) !!}
+              <p class="d-flex font-weight-bold">Total Payable:&#8377;<span id="totalAmount">{{ $product->price }}</span>
               </p>
             </div>
             <hr>

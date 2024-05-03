@@ -1,4 +1,4 @@
-<section class="section newsletter">
+<section class="section newsletter p-0">
   <div class="container">
 
     <div class="newsletter-card" style="background-image: url('{{ asset('images/newsletter-bg.png') }}')">
@@ -14,9 +14,9 @@
           <ion-icon name="mail-outline"></ion-icon>
           <input type="email" name="emal" placeholder="Enter your email" required class="input-field">
         </div>
-        <button type="submit" class="btn btn-outline-dark d-flex align-items-center">
+        <button type="submit" class="btn btn-outline-dark">
           <span>Subscribe</span>
-          <ion-icon name="arrow-forward" aria-hidden="true"></ion-icon>
+          {{-- <ion-icon name="arrow-forward" aria-hidden="true"></ion-icon> --}}
         </button>
 
       </form>

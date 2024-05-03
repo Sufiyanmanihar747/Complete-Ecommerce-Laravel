@@ -34,6 +34,7 @@ Route::middleware('auth')->group(function () {
 Route::middleware('admin')->group(function () {
     Route::resource('admin', AdminController::class);
     Route::get('dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
+    Route::get('orders', [AdminController::class, 'orders'])->name('admin.orders');
 });
 
 Route::resource('categoryproduct' ,CategoryController::class)->only(['show']);
