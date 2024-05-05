@@ -32,7 +32,7 @@ class Authenticate extends Middleware
 
     protected function redirectTo(Request $request): ?string
     {
-        dump('auth middleware');
+        // dump('auth middleware');
         return $request->expectsJson() ? null : route('login');
     }
 }
