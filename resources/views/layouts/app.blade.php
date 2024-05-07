@@ -295,6 +295,9 @@
       backdrop-filter: blur(10px);
       background-color: #ffffff69
     }
+    .razorpay-payment-button {
+      display: none;
+    }
   </style>
 </head>
 
@@ -414,70 +417,70 @@
 
   <script>
     //sweet alert for order successfull
-    document.addEventListener('DOMContentLoaded', function() {
-      var orderForm = document.getElementById('order-form');
+    // document.addEventListener('DOMContentLoaded', function() {
+    //   var orderForm = document.getElementById('order-form');
 
-      orderForm.addEventListener('submit', function(event) {
-        event.preventDefault(); // Prevent the default form submission
+    //   orderForm.addEventListener('submit', function(event) {
+    //     event.preventDefault(); // Prevent the default form submission
 
-        var formData = new FormData(orderForm);
+    //     var formData = new FormData(orderForm);
 
-        // send the form data
-        fetch(orderForm.action, {
-            method: 'POST',
-            body: formData
-          })
-          .then(response => {
-            if (response.ok) {
-              // show alert for order success
-              Swal.fire({
-                title: 'Order Successful!',
-                text: 'Thank you for your purchase.',
-                icon: 'success',
-                confirmButtonColor: '#3085d6',
-                confirmButtonText: 'OK',
-                customClass: {
-                  confirmButton: 'btn btn-primary'
-                }
-              }).then((result) => {
-                // redirect to the order page
-                if (result.isConfirmed) {
-                  window.location.href =
-                    '{{ route('order.index') }}';
-                }
-              });
+    //     // send the form data
+    //     fetch(orderForm.action, {
+    //         method: 'POST',
+    //         body: formData
+    //       })
+    //       .then(response => {
+    //         if (response.ok) {
+    //           // show alert for order success
+    //           Swal.fire({
+    //             title: 'Order Successful!',
+    //             text: 'Thank you for your purchase.',
+    //             icon: 'success',
+    //             confirmButtonColor: '#3085d6',
+    //             confirmButtonText: 'OK',
+    //             customClass: {
+    //               confirmButton: 'btn btn-primary'
+    //             }
+    //           }).then((result) => {
+    //             // redirect to the order page
+    //             if (result.isConfirmed) {
+    //               window.location.href =
+    //                 '{{ route('order.index') }}';
+    //             }
+    //           });
 
-              orderForm.reset();
-            } else {
-              // Handle errors or failed submissions here
-              Swal.fire({
-                title: 'Error',
-                text: 'Failed to submit the order. Please try again later.',
-                icon: 'error',
-                confirmButtonColor: '#3085d6',
-                confirmButtonText: 'OK',
-                customClass: {
-                  confirmButton: 'btn btn-primary'
-                }
-              });
-            }
-          })
-          .catch(error => {
-            console.error('Error:', error);
-            // Handle network errors or other exceptions here
-            Swal.fire({
-              title: 'Error',
-              text: 'An error occurred while submitting the order. Please try again later.',
-              icon: 'error',
-              confirmButtonColor: '#3085d6',
-              confirmButtonText: 'OK',
-              customClass: {
-                confirmButton: 'btn btn-primary'
-              }
-            });
-          });
-      });
-    });
+    //           orderForm.reset();
+    //         } else {
+    //           // Handle errors or failed submissions here
+    //           Swal.fire({
+    //             title: 'Error',
+    //             text: 'Failed to submit the order. Please try again later.',
+    //             icon: 'error',
+    //             confirmButtonColor: '#3085d6',
+    //             confirmButtonText: 'OK',
+    //             customClass: {
+    //               confirmButton: 'btn btn-primary'
+    //             }
+    //           });
+    //         }
+    //       })
+    //       .catch(error => {
+    //         console.error('Error:', error);
+    //         // Handle network errors or other exceptions here
+    //         Swal.fire({
+    //           title: 'Error',
+    //           text: 'An error occurred while submitting the order. Please try again later.',
+    //           icon: 'error',
+    //           confirmButtonColor: '#3085d6',
+    //           confirmButtonText: 'OK',
+    //           customClass: {
+    //             confirmButton: 'btn btn-primary'
+    //           }
+    //         });
+    //       });
+    //   });
+    // });
 
     //increasing and decrreasing quantiy using ajax
     $(document).ready(function($) {

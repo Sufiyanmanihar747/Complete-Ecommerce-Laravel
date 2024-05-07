@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\CartItem;
+use Razorpay\Api\Api;
+use Exception;
+use Illuminate\Support\Facades\Session as FacadesSession;
 use App\Models\Order;
 use App\Models\Address;
 use App\Models\OrderItem;
@@ -41,7 +44,29 @@ class OrderController extends Controller
      */
     public function store(Request $request)
     {
-        // dd($request->all());
+        // dump($request->all());
+        $input = $request->all();
+
+        if (!isset($input['razorpay_payment_id'])) {
+            FacadesSession::put('error', 'Invalid payment ID');
+            return redirect()->back()->withInput();
+        }
+        $api = new Api("rzp_test_WCNKjo716FhP2c", "RUfjM2YLGkBdvY1KVTMni63V");
+
+        try {
+            $payment = $api->payment->fetch($input['razorpay_payment_id']);
+            dd($payment);
+            if ($payment && isset($payment['amount'])) {
+                $response = $api->payment->fetch($input['razorpay_payment_id'])->capture(array('amount' => $payment['amount']));
+                FacadesSession::put('success', 'Payment successful');
+            } else {
+                FacadesSession::put('error', 'Invalid payment details');
+            }
+        } catch (Exception $e) {
+            FacadesSession::put('error', $e->getMessage());
+        }
+
+        // DATABASE THINGS
 
         //for addresses table
         $address = null;
@@ -84,10 +109,11 @@ class OrderController extends Controller
             ];
             OrderItem::create($orderItemData);
         }
+        return redirect('order');
     }
 
     /**
-     * Display the specified resource.
+     * Display the specified items order.
      */
     public function show(string $id)
     {
@@ -130,9 +156,10 @@ class OrderController extends Controller
         // Get all soft-deleted orders
         // $softDeletedOrders = Order::onlyTrashed()->get();
 
-        // Order::destroy($id);
-        $order = Order::find($id);
-        $order->delete();
+        // $order->delete();
+        Order::destroy($id);
+        $order = Order::onlyTrashed()->find($id);
+        $order->forceDelete();
         return redirect('order');
     }
 }

@@ -4,7 +4,7 @@
   <article>
     {{-- POP NOTIFICATION --}}
 
-    <div class="notification-toast" data-toast="">
+    {{-- <div class="notification-toast" data-toast="">
 
       <button class="toast-close-btn" data-toast-close="">
         <ion-icon name="close-outline" role="img" class="md hydrated" aria-label="close outline"></ion-icon>
@@ -20,7 +20,7 @@
           <time datetime="PT2M">2 Minutes</time> ago
         </p>
       </div>
-    </div>
+    </div> --}}
 
     {{-- CARESOLE --}}
 

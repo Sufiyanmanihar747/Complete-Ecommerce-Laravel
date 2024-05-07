@@ -4,7 +4,6 @@
   {{-- @dump($addresses) --}}
   {{-- @dd($cartItems) --}}
   <div class="container d-flex my-3 gap-4">
-
     <div class="container my-4 rounded p-3 shadow-lg background-transparent">
       <h5 class="mb-5 text-center">ORDER SUMMARY</h5>
 
@@ -55,7 +54,6 @@
         <div class="card background-transparent">
           <div class="card-body">
             <h5 class="mb-5 text-center">PAYMENT METHODS</h5>
-
             {!! Form::open([
                 'url' => route('order.store'),
                 'method' => 'POST',
@@ -139,6 +137,10 @@
             </div>
             <hr>
             {!! Form::submit('Pay Now', ['class' => 'btn btn-primary', 'id' => 'order-success-btn']) !!}
+            <script src="https://checkout.razorpay.com/v1/checkout.js" data-key="rzp_test_BY8L6gZxADGedh"
+            data-amount="{{ intval($totalAmount) }}00" data-currency="INR" data-name="Pay to Trendbazaar"
+            data-description="Rozerpay" data-image="{{ asset('logos/trendbazaar-high-resolution-logo-transparent.png') }}"
+            data-theme.color="#4848ff"></script>
             {!! Form::close() !!}
           </div>
         </div>
