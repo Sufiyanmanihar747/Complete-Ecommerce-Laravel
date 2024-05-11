@@ -295,6 +295,7 @@
       backdrop-filter: blur(10px);
       background-color: #ffffff69
     }
+
     .razorpay-payment-button {
       display: none;
     }
@@ -610,9 +611,11 @@
       $('#old_address_select').on('change', function() {
         var selectedOption = $(this).val();
         if (selectedOption !== '') {
-          $('#deliveryAddress').prop('disabled', true); // Disable text area
+          $('#deliveryAddress').prop('disabled', true);
+          $('#deliveryAddress').removeAttr('required');
         } else {
-          $('#deliveryAddress').prop('disabled', false); // Enable text area
+          $('#deliveryAddress').prop('disabled', false);
+          $('#deliveryAddress').attr('required', 'required');
         }
       });
     });

@@ -26,6 +26,7 @@
       }
     }
   </style>
+
   {{-- @dump($products) --}}
   <div class="container">
     <h2 class="h2 section-title">Products of the week</h2>

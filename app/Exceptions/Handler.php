@@ -27,4 +27,14 @@ class Handler extends ExceptionHandler
             //
         });
     }
+
+     public function render($request, Throwable $exception)
+    {
+        // Handle specific exceptions and redirect to the error page
+        if ($exception instanceof \Exception) {
+            return response()->view('errors.error', [], 500);
+        }
+
+        return parent::render($request, $exception);
+    }
 }

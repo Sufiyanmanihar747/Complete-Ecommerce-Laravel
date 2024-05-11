@@ -6,11 +6,12 @@ use App\Models\Category;
 use App\Models\Order;
 use App\Models\OrderItem;
 use App\Models\Product;
+use GlobalFunctionFile;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
-
+use Razorpay\Api\Api;
 
 class AdminController extends Controller
 {
@@ -139,13 +140,42 @@ class AdminController extends Controller
     {
         $admin = Auth::id();
         $orderedProductIds = DB::table('order_items')
-            ->select('order_items.*', 'orders.payment_method', 'products.title')
+            ->select('order_items.*', 'orders.payment_id', 'products.title')
             ->join('products', 'order_items.product_id', '=', 'products.id')
             ->join('orders', 'order_items.order_id', '=', 'orders.id')
             ->where('products.user_id', $admin)
             ->get();
 
-        // dd($orderedProductIds);
-        return view('admin.orders', compact('orderedProductIds'));
+        $paymentIds = $orderedProductIds->pluck('payment_id')->toArray();
+        // dd($paymentIds);
+        foreach ($paymentIds as $paymentId) {
+            $response = $this->getOrderDetail($paymentId);
+            $responses[] = json_decode($response, true);
+        }
+        // dd($responses);
+        return view('admin.orders', compact('orderedProductIds', 'responses'));
+    }
+
+    public function getOrderDetail($paymentIdParam)
+    {
+        $curl = curl_init();
+        curl_setopt_array($curl, array(
+            CURLOPT_URL => 'https://api.razorpay.com/v1/payments/' . $paymentIdParam,
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => '',
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 0,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => 'GET',
+            CURLOPT_HTTPHEADER => array(
+                'Authorization: Basic cnpwX3Rlc3Rfa2hpMUU1NDN4UVBvOUM6dGtXUHRhRG1jZFdXcXpxeXBjQ1VnMjlz'
+            ),
+        ));
+
+        $response = curl_exec($curl);
+        // dd($response);
+        curl_close($curl);
+        return $response;
     }
 }

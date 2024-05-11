@@ -44,28 +44,25 @@ class OrderController extends Controller
      */
     public function store(Request $request)
     {
-        // dump($request->all());
+        // dd($request->all());
         $input = $request->all();
 
         if (!isset($input['razorpay_payment_id'])) {
             FacadesSession::put('error', 'Invalid payment ID');
             return redirect()->back()->withInput();
         }
-        $api = new Api("rzp_test_WCNKjo716FhP2c", "RUfjM2YLGkBdvY1KVTMni63V");
+        $api = new Api("rzp_test_khi1E543xQPo9C", "tkWPtaDmcdWWqzqypcCUg29s");
 
         try {
             $payment = $api->payment->fetch($input['razorpay_payment_id']);
-            dd($payment);
             if ($payment && isset($payment['amount'])) {
-                $response = $api->payment->fetch($input['razorpay_payment_id'])->capture(array('amount' => $payment['amount']));
-                FacadesSession::put('success', 'Payment successful');
-            } else {
-                FacadesSession::put('error', 'Invalid payment details');
+                $api->payment->fetch($input['razorpay_payment_id'])->capture(array('amount' => $payment['amount']));
             }
         } catch (Exception $e) {
             FacadesSession::put('error', $e->getMessage());
+            // return redirect()->back();
         }
-
+        // dd($input['razorpay_payment_id']);
         // DATABASE THINGS
 
         //for addresses table
@@ -80,7 +77,8 @@ class OrderController extends Controller
         $address_id = $address->id;
 
         //for order table
-        $orderData = $request->only(['status', 'payment_method', 'total_amount']);
+        $orderData = $request->only(['status', 'total_amount']);
+        $orderData['payment_id'] = $input['razorpay_payment_id'];
         $orderData['user_id'] = Auth::id();
         $orderData['address_id'] = $address_id;
         $order = Order::create($orderData);

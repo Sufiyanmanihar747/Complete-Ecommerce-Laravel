@@ -19,6 +19,7 @@ return new class extends Migration
             $table->enum('payment_method', ['credit card', 'paypal', 'bank transfer', 'cash on delivery']);
             $table->decimal('total_amount', 10, 2);
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

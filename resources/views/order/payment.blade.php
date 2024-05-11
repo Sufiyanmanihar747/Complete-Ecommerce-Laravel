@@ -70,7 +70,7 @@
               ]) !!}
             </div>
             <div class="form-group">
-              {!! Form::label('delivery_address', 'Delivery Address:') !!}
+              {!! Form::label('new_address', 'New Address:') !!}
               {!! Form::textarea('new_address', null, [
                   'class' => 'form-control',
                   'id' => 'deliveryAddress',
@@ -86,61 +86,11 @@
               <p class="d-flex font-weight-bold">Total Payable:&#8377;<span id="totalAmount">{{ $totalAmount }}</span>
               </p>
             </div>
-            <hr>
-            <div class="form-group">
-              {!! Form::label('payment_method', 'Select Payment Method:') !!}
-              {!! Form::select(
-                  'payment_method',
-                  [
-                      '' => 'Select Payment Method',
-                      'credit card' => 'Credit Card',
-                      'paypal' => 'PayPal',
-                      'bank transfer' => 'bank transfer',
-                      'cash on delivery' => 'Cash on Delivery (COD)',
-                  ],
-                  null,
-                  ['class' => 'form-control', 'id' => 'payment_method', 'required'],
-              ) !!}
-            </div>
-            <div id="creditCardFields" style="display: none;">
-              <div class="form-group">
-                {!! Form::label('cardNumber', 'Card Number:') !!}
-                {!! Form::text('cardNumber', null, [
-                    'class' => 'form-control',
-                    'id' => 'cardNumber',
-                    'placeholder' => 'Enter your card number',
-                ]) !!}
-              </div>
-              <div class="form-group">
-                {!! Form::label('expiryDate', 'Expiry Date:') !!}
-                {!! Form::text('expiryDate', null, [
-                    'class' => 'form-control',
-                    'id' => 'expiryDate',
-                    'placeholder' => 'MM/YYYY',
-                ]) !!}
-              </div>
-              <div class="form-group">
-                {!! Form::label('cvv', 'CVV:') !!}
-                {!! Form::text('cvv', null, ['class' => 'form-control', 'id' => 'cvv', 'placeholder' => 'CVV']) !!}
-              </div>
-              <div class="form-group">
-                {!! Form::label('name', 'Name on Card:') !!}
-                {!! Form::text('name', null, ['class' => 'form-control', 'id' => 'name', 'placeholder' => 'Enter your name']) !!}
-              </div>
-              {!! Form::text('status', 'pending', ['class' => 'd-none']) !!}
-            </div>
-            <div id="paypalFields" style="display: none;">
-              <p>Redirecting to PayPal for payment...</p>
-            </div>
-            <div id="codFields" style="display: none;">
-              <p>Please prepare cash for payment upon delivery.</p>
-            </div>
-            <hr>
             {!! Form::submit('Pay Now', ['class' => 'btn btn-primary', 'id' => 'order-success-btn']) !!}
             <script src="https://checkout.razorpay.com/v1/checkout.js" data-key="rzp_test_BY8L6gZxADGedh"
-            data-amount="{{ intval($totalAmount) }}00" data-currency="INR" data-name="Pay to Trendbazaar"
-            data-description="Rozerpay" data-image="{{ asset('logos/trendbazaar-high-resolution-logo-transparent.png') }}"
-            data-theme.color="#4848ff"></script>
+              data-amount="{{ intval($totalAmount) }}00" data-currency="INR" data-name="Pay to Trendbazaar"
+              data-description="Rozerpay" data-image="{{ asset('logos/trendbazaar-high-resolution-logo-transparent.png') }}"
+              data-theme.color="#4848ff"></script>
             {!! Form::close() !!}
           </div>
         </div>

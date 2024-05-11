@@ -12,7 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('orders', function (Blueprint $table) {
-            $table->softDeletes();
+            $table->string('payment_id');
+            $table->dropColumn('payment_method');
         });
     }
 
